@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Item } from '../../item';
 import { Guid } from 'guid-typescript';
 import { faCheckCircle, faTimes, faPen } from '@fortawesome/free-solid-svg-icons';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
 
@@ -31,13 +31,17 @@ export class ItensComponent {
     this.exibirItem();
     this.form = new FormGroup({
       itemId: new FormControl(),
-      nome: new FormControl(),
-      quantidade: new FormControl(),
+      nome: new FormControl('', [Validators.required]),
+      quantidade: new FormControl('', [Validators.required, Validators.min(1)]),
       isComprado: new FormControl()
     });
   }
 
   cadastrarItem(): void {
+
+    if (this.form.invalid) {
+      return;
+    }
 
     if(this.editItem) {
       const indice: number = this.itens.findIndex(i => i.itemId === this.editItem);
