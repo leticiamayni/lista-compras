@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="added" *ngIf="itens.length === 0">
+        <p>Sem itens adicionados</p>
+    </div>
+
+    <table mat-table [dataSource]="itens" class="mat-elevation-z8">
+        <!--Nome-->
+        <ng-container matColumnDef="nome">
+            <th mat-header-cell *matHeaderCellDef>Nome</th>
+            <td mat-cell *matCellDef="let item">{{ item.nome }}</td>
+        </ng-container>
+        
+        <!--Quantidade-->
+        <ng-container matColumnDef="quantidade">
+            <th mat-header-cell *matHeaderCellDef>Quantidade</th>
+            <td mat-cell *matCellDef="let item">{{ item.quantidade }}</td>
+        </ng-container>
+
+        <!--Ações-->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Ações</th>
+            <td mat-cell *matCellDef="let item">
+                <!--Update-->
+                <button mat-icon-button (click)="updateItem(item.itemId)">
+                    <mat-icon>check_circle</mat-icon>
+                </button>
+
+                <!--Delete-->
+                <button mat-icon-button (click)="deleteItem(item.itemId)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+
+                <!--Edit-->
+                <button mat-icon-button (click)="editItem(item.itemId)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="['nome', 'quantidade', 'actions']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['nome', 'quantidade', 'actions'];"></tr>
+
+    </table>
+</div>

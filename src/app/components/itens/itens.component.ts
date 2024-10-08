@@ -1,81 +1,53 @@
 import { Component } from '@angular/core';
 import { Item } from '../../item';
 import { Guid } from 'guid-typescript';
-import { faCheckCircle, faTimes, faPen } from '@fortawesome/free-solid-svg-icons';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { CommonModule } from '@angular/common';
+import { ItensFormComponent } from "../itens-form/itens-form.component";
+import { ItensListComponent } from "../itens-list/itens-list.component";
 
 @Component({
   selector: 'app-itens',
   standalone: true,
-  imports: [ReactiveFormsModule, FontAwesomeModule, CommonModule],
+  imports: [ItensFormComponent, ItensListComponent],
   templateUrl: './itens.component.html',
   styleUrl: './itens.component.css'
 })
 export class ItensComponent {
-  //icons
-  faCheckCircle = faCheckCircle;
-  faTimes = faTimes;
-  faPen = faPen;
-
   //array
   itens: Item[] = [];
-  form: any;
   editItem: string | null = null;
 
-  //onInit
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     this.exibirItem();
-    this.form = new FormGroup({
-      itemId: new FormControl(),
-      nome: new FormControl('', [Validators.required]),
-      quantidade: new FormControl('', [Validators.required, Validators.min(1)]),
-      isComprado: new FormControl()
-    });
   }
 
-  cadastrarItem(): void {
-
-    if (this.form.invalid) {
-      return;
-    }
-
-    if(this.editItem) {
+  cadastrarItem(item : Item): void {
+    if (this.editItem) {
       const indice: number = this.itens.findIndex(i => i.itemId === this.editItem);
-      if(indice !== -1) {
-        this.itens[indice] = { ...this.form.value };
+      if (indice !== -1) {
+        this.itens[indice] = item;
+        this.itens = [...this.itens];
       }
       this.editItem = null;
     } else {
-      this.form.value.itemId = Guid.create().toString();
-      this.form.value.isComprado = false;
-      const item : Item = this.form.value;
-      this.itens.push(item);
+      item.itemId = Guid.create().toString();
+      // this.itens.push(item);
+      this.itens = [...this.itens, item];
     }
     localStorage.setItem('DB', JSON.stringify(this.itens));
-    this.form.reset();
   }
 
   exibirItem(): void {
-    if(localStorage.getItem('DB')){
-      this.itens = JSON.parse(localStorage.getItem('DB') ?? '[]'); // Garante que o valor nunca será null
-    } else {
-      this.itens = [];
-    }
+    this.itens = JSON.parse(localStorage.getItem('DB') ?? '[]') || [];
   }
 
   atualizarItem(itemId: string): void {
-    const indice : number = this.itens.findIndex(i => i.itemId === itemId);
-
-    if(this.itens[indice].isComprado) {
-      this.itens[indice].isComprado = false;
+    const indice: number = this.itens.findIndex(i => i.itemId === itemId);
+    if (indice !== -1) {
+      this.itens[indice].isComprado = !this.itens[indice].isComprado;
+      localStorage.setItem('DB', JSON.stringify(this.itens));
     } else {
-      this.itens[indice].isComprado = true;
+      console.warn(`Item com ID ${itemId} não encontrado.`);
     }
-    localStorage.setItem('DB', JSON.stringify(this.itens));
   }
 
   deletarItem(itemId: string): void {
@@ -85,10 +57,13 @@ export class ItensComponent {
 
   editarItem(itemId: string): void {
     const item = this.itens.find(i => i.itemId === itemId);
-
-    if(item) {
+    if (item) {
       this.editItem = item.itemId;
-      this.form.patchValue(item);
     }
+  }
+
+  // Getter para retornar o item a ser editado
+  get itemToEdit(): Item | null {
+    return this.itens.find(i => i.itemId === this.editItem) ?? null;
   }
 }

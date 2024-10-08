@@ -1,0 +1,13 @@
+.container form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+form mat-form-field {
+    margin-right: 1rem;
+}
+
+mat-form-field .input-qtd {
+    max-width: 25px;
+}
