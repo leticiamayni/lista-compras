@@ -1,7 +1,4 @@
 <div class="container">
-    <div class="added" *ngIf="itens.length === 0">
-        <p>Sem itens adicionados</p>
-    </div>
 
     <!--Itens não comprados-->
     <table mat-table [dataSource]="itens" class="mat-elevation-z8">
@@ -41,5 +38,8 @@
         <tr mat-header-row *matHeaderRowDef="['nome', 'quantidade', 'actions']"></tr>
         <tr mat-row *matRowDef="let row; columns: ['nome', 'quantidade', 'actions'];"></tr>
 
+        <div class="added" *ngIf="itens.length === 0">
+            <p>Sem itens adicionados</p>
+        </div>
     </table>
 </div>

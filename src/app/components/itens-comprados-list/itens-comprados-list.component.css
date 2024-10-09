@@ -1,0 +1,18 @@
+.mat-elevation-z8 {
+    background-color: #f5f5f5; /* Cor de fundo padrão */
+}
+
+.mat-elevation-z8 {
+    background-color: #dcdcdc; /* Cinza mais escuro */
+}
+
+.mat-table {
+    border: 1px solid #ccc; /* Borda cinza clara */
+}
+
+button {
+    border: none;
+    outline: none;
+    background: none;
+}
+

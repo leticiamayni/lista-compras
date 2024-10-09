@@ -1,20 +1,28 @@
-<app-itens-form 
-[editItem]="editItem" 
-[itemToEdit]="itemToEdit"
-(itemAdded)="cadastrarItem($event)"
-(itemUpdated)="cadastrarItem($event)">
-</app-itens-form>
+<div class="container">
 
-<app-itens-list
-[itens]="getItensNaoComprados()"
-(itemDeleted)="deletarItem($event)"
-(itemUpdated)="atualizarItem($event)"
-(itemEdited)="editarItem($event)"
-></app-itens-list>
+    <h1>Lista de Compras</h1>
 
-<app-itens-comprados-list
-[itensComprados]="itensComprados" 
-[checkedItens]="checkedItens" 
-(itemDeleted)="deletarItem($event)" 
-(itemUpdated)="atualizarItem($event)">
-></app-itens-comprados-list>
+    <app-itens-form 
+    [editItem]="editItem" 
+    [itemToEdit]="itemToEdit"
+    (itemAdded)="cadastrarItem($event)"
+    (itemUpdated)="cadastrarItem($event)">
+    </app-itens-form>
+
+    <h3>Lista de itens</h3>
+    <app-itens-list
+    [itens]="getItensNaoComprados()"
+    (itemDeleted)="deletarItem($event)"
+    (itemUpdated)="atualizarItem($event)"
+    (itemEdited)="editarItem($event)"
+    ></app-itens-list>
+
+    <h3>No carrinho</h3>
+    <app-itens-comprados-list
+    [itensComprados]="itensComprados" 
+    [checkedItens]="checkedItens" 
+    (itemDeleted)="deletarItem($event)" 
+    (itemUpdated)="atualizarItem($event)">
+    ></app-itens-comprados-list>
+
+</div>

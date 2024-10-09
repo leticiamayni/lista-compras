@@ -1,8 +1,5 @@
 <div class="container">
-    <div class="added" *ngIf="itensComprados.length === 0">
-      <p>Sem itens comprados</p>
-    </div>
-  
+
     <table mat-table [dataSource]="itensComprados" class="mat-elevation-z8">
       <!-- Nome -->
       <ng-container matColumnDef="nome">
@@ -33,5 +30,9 @@
   
       <tr mat-header-row *matHeaderRowDef="['nome', 'quantidade', 'actions']"></tr>
       <tr mat-row *matRowDef="let row; columns: ['nome', 'quantidade', 'actions'];"></tr>
+
+      <div class="added" *ngIf="itensComprados.length === 0">
+        <p>Sem itens comprados</p>
+      </div>
     </table>
   </div>

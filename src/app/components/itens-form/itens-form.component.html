@@ -8,6 +8,6 @@
             <input type="number" matInput placeholder="Qtd." formControlName="quantidade" >
         </mat-form-field>
     
-        <button mat-mini-fab color="primary" type="submit"><mat-icon>add</mat-icon></button>
+        <button mat-mini-fab color="primary" type="submit" [disabled]="!this.form.valid"><mat-icon>add</mat-icon></button>
     </form>
 </div>
