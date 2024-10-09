@@ -1,30 +1,25 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
-import { Item } from '../../item';
 import { CommonModule } from '@angular/common';
+import { Item } from '../../item';
 
 @Component({
-  selector: 'app-itens-list',
+  selector: 'app-itens-comprados-list',
   standalone: true,
   imports: [MatTableModule, MatIconModule, CommonModule],
-  templateUrl: './itens-list.component.html',
-  styleUrl: './itens-list.component.css'
+  templateUrl: './itens-comprados-list.component.html',
+  styleUrl: './itens-comprados-list.component.css'
 })
-export class ItensListComponent {
-  @Input() itens: Item[] = []; //itens não comprados
-  @Input() itensComprados: Item[] = []; //itens comprados
+
+export class ItensCompradosListComponent {
+  @Input() itensComprados: Item[] = []; // itens comprados
   @Input() checkedItens: Set<string> = new Set();
   @Output() itemDeleted = new EventEmitter<string>();
   @Output() itemUpdated = new EventEmitter<string>();
-  @Output() itemEdited = new EventEmitter<string>();
 
   updateItem(itemId: string) {
     this.itemUpdated.emit(itemId);
-  }
-
-  editItem(itemId: string) {
-    this.itemEdited.emit(itemId);
   }
 
   deleteItem(itemId: string) {

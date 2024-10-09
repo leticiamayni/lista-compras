@@ -1,5 +1,3 @@
-
-
 <app-itens-form 
 [editItem]="editItem" 
 [itemToEdit]="itemToEdit"
@@ -8,8 +6,15 @@
 </app-itens-form>
 
 <app-itens-list
-[itens]="itens"
+[itens]="getItensNaoComprados()"
 (itemDeleted)="deletarItem($event)"
 (itemUpdated)="atualizarItem($event)"
 (itemEdited)="editarItem($event)"
 ></app-itens-list>
+
+<app-itens-comprados-list
+[itensComprados]="itensComprados" 
+[checkedItens]="checkedItens" 
+(itemDeleted)="deletarItem($event)" 
+(itemUpdated)="atualizarItem($event)">
+></app-itens-comprados-list>
